@@ -80,7 +80,7 @@ export const commentOnPost = async (req, res) => {
 		}
 
 		if (!text) {
-			return res.status(400).json({ error: "Text field is required" });
+			return res.status(400).json({ error: "You need to comment something!" });
 		}
 
 		const comment = { user: userId, text };
@@ -88,7 +88,8 @@ export const commentOnPost = async (req, res) => {
 		post.comments.push(comment);
 		await post.save();
 
-		res.status(200).json(post);
+		const updatedComments = post.comments;
+		res.status(200).json(updatedComments);
 	} catch (error) {
 		res.status(500).json({ error: "Internal Server Error" });
 		console.log("Error in commentOnPost: ", error.message);
